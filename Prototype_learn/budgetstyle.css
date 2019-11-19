@@ -1,0 +1,198 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    color: #555;
+    font-family: Open Sans;
+    font-size: 16px;
+    position: relative;
+    height: 100vh;
+    font-weight: 400;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.right { float: right; }
+
+.top {
+    height: 40vh;
+    background-color: coral;
+
+    background-position: center;
+    position: relative;
+}
+
+.Budget {
+    position: relative;
+    width: 350px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+}
+
+.budget__title{
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 5px;
+   padding-top: 10px
+  font-weight: 300;
+}
+
+.BudgetValue{
+  font-weight: 300;
+  font-size: 46px;
+  text-align: center;
+  margin-bottom: 25px;
+  letter-spacing: 2px;
+}
+
+.span__month{
+  color :	#000000;
+}
+
+.budget_income_tab,
+.budget_expense_tab {
+
+    text-transform: uppercase;
+      width: 350px;
+      height: 50px
+}
+
+.budget_income_tab {
+
+    margin-bottom: 10px;
+    background-color: #28B9B5;
+}
+.budget_expense_tab {
+  margin-bottom: 10px;
+  background-color: #DC143C;
+}
+
+.budget_income_text,
+.budget_expense_text {
+    float: left;
+    font-size: 13px;
+    color: #444;
+    margin-top: 2px;
+}
+
+.budget_income_value{
+  float: left;
+}
+
+
+.budget_expense_value {
+    letter-spacing: 1px;
+    float: left;
+    margin-left: 10px;
+}
+
+.budget_income_percentage,
+.budget_expense_percentage {
+    float: left;
+    width: 34px;
+    font-size: 11px;
+    padding: 3px 0;
+    margin-left: 10px;
+}
+
+.budget_income_percentage,
+.budget_expense_percentage {
+    background-color: rgba(255, 255, 255, 0.2);
+    text-align: center;
+    border-radius: 3px;
+}
+
+
+.add {
+    padding: 14px;
+    border-bottom: 1px solid #e7e7e7;
+    background-color: #f7f7f7;
+}
+
+
+.add_container{
+  text-align: center;
+}
+
+.container {
+    width: 1000px;
+    margin: 60px auto;
+}
+
+.income_container{
+  float: left;
+    width: 450px;
+    margin-right: 50px;
+
+}
+
+.expense_container{
+  float: left;
+    width: 450px;
+    margin-right: 50px;
+
+}
+
+
+
+h4 {
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+
+.icome__title { color: #28B9B5;text-align: center;}
+.expenses__title { color: #FF5049;text-align: center; }
+
+
+.item:first-child { border-top: 1px solid #e7e7e7; }
+.item:nth-child(even) { background-color: #f7f7f7; }
+
+.item__description {
+    float: left;
+}
+
+.item__value {
+    float: left;
+    transition: transform 0.3s;
+}
+
+.item__percentage {
+    float: left;
+    margin-left: 20px;
+    transition: transform 0.3s;
+    font-size: 11px;
+    background-color: #FFDAD9;
+    padding: 3px;
+    border-radius: 3px;
+    width: 32px;
+    text-align: center;
+}
+
+
+.item__delete {
+    float: left;
+}
+
+.item__delete--btn {
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    display: none;
+}
