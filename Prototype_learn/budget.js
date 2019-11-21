@@ -5,11 +5,30 @@
 
 var budgetcontroller = (function(){
 //functional constructor
-        var Expense  = function(id,desciption,value){
+        var Expense  = function(id,desciption,value) {
 
           this.id = id;
           this.desciption=desciption;
           this.value=value;
+          this.per = -1;
+
+
+        };
+
+
+        Expense.prototype.calcperc = function(totalincome){
+
+          if (totalincome > 0){
+            this.per = Math.round((this.value / totalincome) * 100);
+          }
+
+          else{
+            this.per = -1;
+          }
+        };
+
+        Expense.prototype.getperc = function(){
+          return this.per;
         };
 
         var Income  = function(id,desciption,value){
@@ -78,6 +97,20 @@ var budgetcontroller = (function(){
 
           },
 
+          deletitem : function(type,id){
+
+            var obtainarray = data.allitems[type].map(function(current){
+              return current.id;
+            });
+
+            var index = obtainarray.indexOf(id);
+
+            if (index !== -1){
+              data.allitems[type].splice(index,1);
+            }
+
+          },
+
           calculatebudget : function(){
 
             Buddi('add');
@@ -92,6 +125,26 @@ var budgetcontroller = (function(){
           else{
             data.percentage = -1;
           }
+
+          },
+
+          calculatePercentages  :function(){
+
+
+              data.allitems.sub.forEach(function(vari){
+                vari.calcperc(data.totals.add);
+              });
+
+          },
+
+
+          getPerci: function(){
+            var allperc = data.allitems.sub.map(function(cur){
+              return cur.getperc();
+            });
+
+            return allperc;
+
 
           },
 
@@ -130,7 +183,30 @@ var UIcontroller = (function(){
     buddyvalue : '.BudgetValue',
     buddyincomevalue : '.budget_income_value',
     buddyexpensevalue : '.budget_expense_value',
-    budgetpercentage : '.budget_expense_percentage'
+    budgetpercentage : '.budget_expense_percentage',
+    container : '.container',
+    expensesperclabel : '.item__percentage',
+    datelabel : '.span__month'
+  };
+
+
+  var formatnumber = function(num,type){
+    var numSplit, int, rem, sign;
+    num = Math.abs(num);
+    num = num.toFixed(2); // rounding upto 2 float numbers
+
+    numSplit = num.split('.');
+    int = numSplit[0];
+    if (int.length >= 3){
+      int = int.substr(0,int.length-3) + "," + int.substr(int.length-3,int.length);
+    }
+    rek = numSplit[1];
+
+    type === 'add' ? sign = '+' : sign = '-';
+
+    return (sign + ' ' + int + '.' + String(rek) );
+
+
 
   };
 
@@ -155,7 +231,9 @@ var UIcontroller = (function(){
 
 
     return function(obj){
-      document.querySelector(CentralCSS.buddyvalue).textContent = obj.budget;
+      var type;
+      obj.budget >= 0 ? type = 'add' : type = 'sub';
+      document.querySelector(CentralCSS.buddyvalue).textContent = formatnumber(obj.budget,type);
       document.querySelector(CentralCSS.buddyincomevalue).textContent = obj.totalinc;
       document.querySelector(CentralCSS.buddyexpensevalue).textContent = obj.totalExp;
 
@@ -191,7 +269,7 @@ var UIcontroller = (function(){
    var html, newhtml, uk;
     if (type==='add'){
       uk = CentralCSS.inc_list;
-      html =   '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+      html =   '<div class="item clearfix" id="add-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div> <button class="atm atn">Delete</button></div></div>';
 
 
                   }
@@ -201,7 +279,7 @@ else if (type==='sub') {
 
 
     uk = CentralCSS.exp_list;
-    html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+    html = '<div class="item clearfix" id="sub-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><button class="atm atn">Delete</button></div></div>';
 
 
 
@@ -211,7 +289,7 @@ else if (type==='sub') {
 
  newhtml = html.replace('%id%',obj.id);
  newhtml = newhtml.replace('%description%',obj.desciption);
- newhtml = newhtml.replace('%value%',obj.value);
+ newhtml = newhtml.replace('%value%',formatnumber(obj.value,type));
 
  document.querySelector(uk).insertAdjacentHTML('beforeend',newhtml);
 
@@ -221,6 +299,56 @@ else if (type==='sub') {
 
 
   },
+
+
+  deletelistitem : function(selectorid){
+
+    var el = document.getElementById(selectorid);
+
+    el.parentNode.removeChild(el);
+
+
+
+  },
+
+  displayPercentages: function(percentages){
+    var fields = document.querySelectorAll(CentralCSS.expensesperclabel);
+
+    var nodelistForEach = function(list,callback){
+      for (var i =0; i< list.length; i++){
+        callback(list[i],i);
+      }
+
+    };
+
+
+    nodelistForEach (fields, function(current,index){
+      if (percentages[index] > 0){
+      current.textContent = percentages[index] + '%';
+    }
+    else{
+      current.textContent = '---';
+    }
+    });
+
+
+
+  },
+
+
+  displaydate : function(){
+    var now = new Date();
+    var mnths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    var year = now.getFullYear() + " " + mnths[now.getMonth()];
+
+    document.querySelector(CentralCSS.datelabel).textContent = year;
+
+
+  },
+
+
+
 
   getDOMstrings: function(){
 
@@ -257,6 +385,8 @@ var controller = (function(budgtctrl,uictrl){
       }
     });
 
+  document.querySelector(receiveddomvalue.container).addEventListener('click',ctrlDeleteItem);
+
  };
 
 
@@ -269,6 +399,23 @@ var controller = (function(budgtctrl,uictrl){
      console.log(budget);
      var kushu = uictrl.displayObject();
      kushu(budget);
+
+
+ };
+
+
+ var updatepercentages = function(){
+
+     budgetcontroller.calculatePercentages();
+
+     var sh = budgetcontroller.getPerci();
+     console.log(sh);
+
+      uictrl.displayPercentages(sh);
+
+
+
+
 
 
  };
@@ -290,6 +437,7 @@ if (inputreceived !== "" && !isNaN(inputreceived.value) &&  inputreceived.value 
 
   //calculate and update budget
   updateBudget();
+  updatepercentages();
 
   //console.log(inputreceived.desciption);
 
@@ -298,10 +446,28 @@ if (inputreceived !== "" && !isNaN(inputreceived.value) &&  inputreceived.value 
 
 };
 
+
+
+var ctrlDeleteItem = function(event){
+  var buttoncache =   event.target.parentNode.parentNode.id;
+  var type, id;
+  if (buttoncache){
+  var arrbut = buttoncache.split('-');
+  console.log(arrbut);
+  type = arrbut[0];
+  id = parseInt(arrbut[1]);
+
+  budgetcontroller.deletitem(type,id);
+  uictrl.deletelistitem(buttoncache);
+  updateBudget();
+  updatepercentages();
+}
+};
+
  return {
    init : function(){
      console.log("Application started");
-     
+
       uictrl.displayObject()({
         budget: 0,
         totalinc : 0,
@@ -309,6 +475,7 @@ if (inputreceived !== "" && !isNaN(inputreceived.value) &&  inputreceived.value 
         percentage : 0
       });
      setupeventlistener();
+     uictrl.displaydate();
    }
  };
 

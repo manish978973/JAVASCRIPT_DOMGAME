@@ -137,8 +137,8 @@ body {
 }
 
 .expense_container{
-  float: left;
-    width: 450px;
+  float: right;
+    width: 400px;
     margin-right: 50px;
 
 }
@@ -196,3 +196,39 @@ h4 {
     line-height: 1;
     display: none;
 }
+
+.add__btn {
+    font-size: 35px;
+    background: none;
+    border: none;
+    color: #28B9B5;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1.1;
+    margin-left: 10px;
+}
+
+
+.add__btn:active { transform: translateY(2px); }
+
+
+.item__delete--btn:focus { outline: none; }
+.item__delete--btn:active { transform: translateY(2px); }
+
+.item:hover .item__delete--btn { display: block; }
+.item:hover .item__value { transform: translateX(-20px); }
+.item:hover .item__percentage { transform: translateX(-20px); }
+
+
+.atm{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  font-size: 6px;
+  cursor: pointer;
+}
+
+.atn {border-radius: 100%;}
