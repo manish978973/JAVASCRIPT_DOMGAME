@@ -151,7 +151,7 @@ var temp = Array.from(echs)  //.forEach(x => x.className==='box sasi1' ? continu
 var zuc = ['sasi' ,'arjun']
 var cuz = ['manish','arjun']
 
-console.log(...zuc,...cuz)
+//console.log(...zuc,...cuz)
 
 
 function arrno(a,b,c,d){
@@ -164,4 +164,123 @@ function arrno(a,b,c,d){
 
 //the baove was in ES6 in ES5 we use apply
 
-arrno.apply(null,zuc,cuz);
+//arrno.apply(null,zuc,cuz);     These are spread parameters
+
+//rest parameters
+
+function kushi(limit,...ye){
+  ye.forEach(q => console.log((2019-q) > limit))
+}
+
+//kushi(26,1990,1991,1992,1993);
+
+
+
+
+//default parameters in ES6
+
+function pura(name,age,place = 'Trivandrum',job = 'Engineer'){
+  this.name = name;
+  this.age = age;
+  this.place = place;
+  this.job = job;
+}
+
+
+var p1 = new pura('Ramu',23)
+//console.log(p1)
+
+var p2 = new pura('Raku',17,'Newyork','Student')
+//console.log(p2)
+
+
+
+
+
+////////map is similar to objects withis inbuilt features
+
+
+const question = new Map();
+
+question.set('Question', 'What is the name of your first car ?')
+question.set(1, 'Lambo')
+question.set(2, 'Ambassador')
+question.set(3, 'Padmini')
+question.set('correct', 2)
+question.set(true, 'Wow Correct answer')
+question.set(false, 'Oops better luck next time')
+
+
+
+//can be looped over map with foreach and for as used earlier
+
+//console.log(question.get(1))
+//console.log(question.has('Question'))
+//console.log(question.size)
+//console.log(question.delete(4))
+//console.log(question.clear()))
+
+//question.forEach((value,key) => console.log(`The key is ${key} and value is ${value}`)); // one method of looping (but we cant continue or break)
+
+
+//console.log(question.get('Question'));
+for (let [key,value] of question.entries()){
+
+  if (typeof(key) === 'number'){
+//  console.log(`Answer ${key} : ${value}`)
+}
+}
+
+//var getto = prompt('Enter the answer number')
+
+//console.log(question.get(parseInt(getto) === question.get('correct')))
+
+//classes in javaacript can be writtel like javaacript
+
+class car{
+
+constructor (name, model, price){
+  this.name = name;
+  this.model = model;
+  this.price = price;
+}
+
+ sasi (){   //methods can be directy werittem insted of using prototype
+    console.log('Hi')
+}
+
+
+static lokesh(){ //static can be used with class name ..no need of creating instances
+  console.log('Hi')
+}
+
+
+}
+
+const car1 = new car('C class', 'Mercedes', 135)
+//car1.sasi()
+//car.lokesh()
+
+
+
+class smallcar extends car{
+
+constructor (name, model, price,country, language){
+
+  super(name,model,price)
+  this.country = country;
+  this.language = language;
+
+}
+
+
+poco (){
+  console.log(this.name + ' in ' + this.country)
+}
+
+}
+
+
+const car2 = new smallcar('C class', 'Mercedes', 135,'India','Malayalam')
+car2.poco();
+car2.sasi();
