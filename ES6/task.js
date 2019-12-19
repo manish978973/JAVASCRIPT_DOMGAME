@@ -9,7 +9,9 @@ class park{
 
 
   treedensity(){
-    console.log(this.notree/this.area);
+    const density = this.notree/this.area;
+    console.log(`The park ${this.name} has a density of ${density} trees per sq qm`)
+
   }
 
 }
@@ -23,11 +25,11 @@ class street{
   }
 }
 
-park1 = new park('Park1',1990,1500,1000)
+park1 = new park('Park1',1990,700,1000)
 park2 = new park('Park2',1996,1700,865)
-park3 = new park('Park3',2000,600,1800)
+park3 = new park('Park3',2000,1501,1800)
 
-
+//const allParks [park1, park2, park3]
 
 let parko = [park1,park2,park3]
 
@@ -59,7 +61,13 @@ function average(arr){
   const age = counter/arr.length
   console.log(age)
 
+  const ages = arr.map(el => new Date().getFullYear() - el.build);
+  console.log(`The constant age is this ${ages}`)
+
 }
+
+
+
 
 average(parko);
 
@@ -74,7 +82,13 @@ function name1000(arr){
  })
   }
 
+function alternatename1000(arr){
+    const indexes = arr.map(el =>
+                    el.notree).findIndex(el => el >= 1500);
+    console.log("Indexes are " + indexes)
+  }
 
+alternatename1000(parko)
 name1000(parko)
 
 
@@ -85,10 +99,38 @@ function len(streeto){
   streeto.forEach(x => abb += x.lengtho)
 //  streeto.forEach(x => console.log(x.lengtho))
   console.log("total : " + abb )
+  let avg = abb/streeto.length;
   console.log("average :" + abb/streeto.length)
 //  console.log(streeto)
+
+//  return abb,avg
 }
 
 len(streeto)
+
+
+
+function alternativelen(streeto){
+
+  let bbp = 0
+  streeto.forEach(x => bbp += x.lengtho)
+//  streeto.forEach(x => console.log(x.lengtho))
+  console.log("total : " + bbp )
+  let avg = bbp/streeto.length;
+  console.log("average :" + bbp/streeto.length)
+//  console.log(streeto)
+
+  return [bbp,avg];
+}
+
+const [tot,alt]= alternativelen(streeto)
+console.log('The alternative total len of street is ' + tot + 'and alternative total avg is ' + alt)
+
+
+function classifystreet(streeto){
+
+   console.log('The street ' + streeto.name is )
+
+}
 
 console.log(streeto)
