@@ -33,7 +33,7 @@ let parko = [park1,park2,park3]
 
 function density(parko){
 
-  parko.forEach(x => x.treedensity()) 
+  parko.forEach(x => x.treedensity())
 
 
 }

@@ -282,5 +282,5 @@ poco (){
 
 
 const car2 = new smallcar('C class', 'Mercedes', 135,'India','Malayalam')
-car2.poco();
-car2.sasi();
+//car2.poco();
+//car2.sasi();
